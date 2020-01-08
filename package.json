@@ -1,6 +1,6 @@
 {
-  "name": "react-native-mentions",
-  "version": "1.1.4",
+  "name": "react-native-mentions-elpha",
+  "version": "1.0.0",
   "description": "Mentions textbox for React Native. Works on both ios and android",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/harshq/react-native-mentions.git"
+    "url": "git+https://github.com/elpha-inc/react-native-mentions.git"
   },
   "keywords": [
     "react-component",
@@ -16,10 +16,10 @@
     "mentions",
     "textInput"
   ],
-  "author": "Harshana Abeyaratne <harshana.abeyaratne@gmail.com> (https://github.com/harshq)",
+  "author": "Serge Bakayoko <bakoserge@gmail.com> (https://github.com/bakoserge)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/harshq/react-native-mentions/issues"
+    "url": "https://github.com/elpha-inc/react-native-mentions/issues"
   },
-  "homepage": "https://github.com/harshq/react-native-mentions#readme"
+  "homepage": "https://github.com/elpha-inc/react-native-mentions#readme"
 }
