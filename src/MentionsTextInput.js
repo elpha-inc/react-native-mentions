@@ -8,7 +8,6 @@ import {
   ViewPropTypes
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { dimensions } from '../../../styles/common';
 
 export default class MentionsTextInput extends Component {
   constructor() {
