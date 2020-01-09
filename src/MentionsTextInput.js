@@ -107,6 +107,7 @@ export default class MentionsTextInput extends Component {
   render() {
 
     const { width } = Dimensions.get('window');
+    const addition = this.props.suggestionsData.length > 5 ? 100 : 0;
 
     return (
 
@@ -124,8 +125,8 @@ export default class MentionsTextInput extends Component {
           <FlatList
             style={{ width: width, marginLeft: -20 }}
             contentContainerStyle={{
-              height: (this.props.suggestionRowHeight * this.props.suggestionsData.length) + 100,
-              paddingTop: 100
+              height: (this.props.suggestionRowHeight * this.props.suggestionsData.length) + addition,
+              paddingTop: addition
             }}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps={"always"}
