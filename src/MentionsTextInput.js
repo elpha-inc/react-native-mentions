@@ -8,6 +8,7 @@ import {
   ViewPropTypes
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { dimensions } from '../../../styles/common';
 
 export default class MentionsTextInput extends Component {
   constructor() {
@@ -104,24 +105,23 @@ export default class MentionsTextInput extends Component {
   }
 
   render() {
+
     return (
+
       <View>
-        <TextInput
-          {...this.props}
-          onContentSizeChange={(event) => {
-            this.setState({
-              textInputHeight: this.props.textInputMinHeight >= event.nativeEvent.contentSize.height ? this.props.textInputMinHeight : event.nativeEvent.contentSize.height + 10,
-            });
-          }}
-          ref={component => this._textInput = component}
-          onChangeText={this.onChangeText.bind(this)}
-          multiline={true}
-          value={this.props.value}
-          style={[{ ...this.props.textInputStyle }, { height: Math.min(this.props.textInputMaxHeight, this.state.textInputHeight) }]}
-          placeholder={this.props.placeholder ? this.props.placeholder : 'Write a comment...'}
-        />
-        <Animated.View style={[{ ...this.props.suggestionsPanelStyle }, { height: this.state.suggestionRowHeight }]}>
+        <Animated.View style={[{ ...this.props.suggestionsPanelStyle }, { height: this.state.suggestionRowHeight }, {
+          flex: 1,
+          width: "100%",
+          position: "absolute",
+          top: -(this.props.suggestionRowHeight * this.props.suggestionsData.length),
+        }]}>
           <FlatList
+            style={{ width: "120%", marginLeft: -20 }}
+            contentContainerStyle={{
+              height: (this.props.suggestionRowHeight * this.props.suggestionsData.length) + 100,
+              paddingTop: 100
+            }}
+            showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps={"always"}
             horizontal={this.props.horizontal}
             ListEmptyComponent={this.props.loadingComponent}
@@ -131,6 +131,23 @@ export default class MentionsTextInput extends Component {
             renderItem={(rowData) => { return this.props.renderSuggestionsRow(rowData, this.stopTracking.bind(this)) }}
           />
         </Animated.View>
+        <View>
+          <TextInput
+            {...this.props}
+            onContentSizeChange={(event) => {
+              this.setState({
+                textInputHeight: this.props.textInputMinHeight >= event.nativeEvent.contentSize.height ? this.props.textInputMinHeight : event.nativeEvent.contentSize.height + 10,
+              });
+            }}
+            ref={component => this._textInput = component}
+            onChangeText={this.onChangeText.bind(this)}
+            multiline={true}
+            value={this.props.value}
+            style={[{ ...this.props.textInputStyle }, { height: Math.min(this.props.textInputMaxHeight, this.state.textInputHeight) }]}
+            placeholder={this.props.placeholder ? this.props.placeholder : 'Write a comment...'}
+          />
+        </View>
+
       </View>
     )
   }
@@ -158,8 +175,8 @@ MentionsTextInput.propTypes = {
   keyExtractor: PropTypes.func.isRequired,
   horizontal: PropTypes.bool,
   suggestionRowHeight: PropTypes.number.isRequired,
-  MaxVisibleRowCount: function(props, propName, componentName) {
-    if(!props.horizontal && !props.MaxVisibleRowCount) {
+  MaxVisibleRowCount: function (props, propName, componentName) {
+    if (!props.horizontal && !props.MaxVisibleRowCount) {
       return new Error(
         `Prop 'MaxVisibleRowCount' is required if horizontal is set to false.`
       );
