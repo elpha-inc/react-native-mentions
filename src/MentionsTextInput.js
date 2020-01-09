@@ -8,6 +8,7 @@ import {
   ViewPropTypes
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { Dimensions } from 'react-native'
 
 export default class MentionsTextInput extends Component {
   constructor() {
@@ -105,17 +106,23 @@ export default class MentionsTextInput extends Component {
 
   render() {
 
+    const { width } = Dimensions.get('window');
+
     return (
 
       <View>
-        <Animated.View style={[{ ...this.props.suggestionsPanelStyle }, { height: this.state.suggestionRowHeight }, {
-          flex: 1,
-          width: "100%",
-          position: "absolute",
-          top: -(this.props.suggestionRowHeight * this.props.suggestionsData.length),
-        }]}>
+        <Animated.View style={
+          [{ ...this.props.suggestionsPanelStyle },
+          {
+            flex: 1,
+            width: width + 100,
+            position: "absolute",
+            top: -(this.props.suggestionRowHeight * this.props.suggestionsData.length),
+          },
+          { height: this.state.suggestionRowHeight }]
+        }>
           <FlatList
-            style={{ width: "120%", marginLeft: -20 }}
+            style={{ width: width, marginLeft: -20 }}
             contentContainerStyle={{
               height: (this.props.suggestionRowHeight * this.props.suggestionsData.length) + 100,
               paddingTop: 100
