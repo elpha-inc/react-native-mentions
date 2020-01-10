@@ -108,7 +108,9 @@ export default class MentionsTextInput extends Component {
 
     const { width } = Dimensions.get('window');
     const addition = this.props.suggestionsData.length > 5 ? 100 : 0;
-
+    const numOfRows = this.props.MaxVisibleRowCount >= this.props.suggestionsData.length ? this.props.suggestionsData.length : this.props.MaxVisibleRowCount;
+    const bottomPadding = (this.props.suggestionsData.length * this.props.suggestionRowHeight);
+  
     return (
 
       <View>
@@ -118,15 +120,16 @@ export default class MentionsTextInput extends Component {
             flex: 1,
             width: width + 100,
             position: "absolute",
-            top: -(this.props.suggestionRowHeight * this.props.suggestionsData.length),
+            top: this.props.MaxVisibleRowCount >= this.props.suggestionsData.length ? -(this.props.suggestionRowHeight * this.props.suggestionsData.length) : - (this.props.suggestionRowHeight * this.props.MaxVisibleRowCount),
           },
           { height: this.state.suggestionRowHeight }]
         }>
           <FlatList
             style={{ width: width, marginLeft: -20 }}
             contentContainerStyle={{
-              height: (this.props.suggestionRowHeight * this.props.suggestionsData.length) + addition,
-              paddingTop: addition
+              height: (numOfRows) + addition,
+              paddingTop: addition,
+              paddingBottom: bottomPadding
             }}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps={"always"}
