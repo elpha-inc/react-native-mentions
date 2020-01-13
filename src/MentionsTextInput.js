@@ -112,7 +112,6 @@ export default class MentionsTextInput extends Component {
     const bottomPadding = (this.props.suggestionsData.length * this.props.suggestionRowHeight);
   
     return (
-
       <View>
         <Animated.View style={
           [{ ...this.props.suggestionsPanelStyle },
@@ -120,7 +119,7 @@ export default class MentionsTextInput extends Component {
             flex: 1,
             width: width + 100,
             position: "absolute",
-            top: this.props.MaxVisibleRowCount >= this.props.suggestionsData.length ? -(this.props.suggestionRowHeight * this.props.suggestionsData.length) : - (this.props.suggestionRowHeight * this.props.MaxVisibleRowCount),
+            [`${this.props.suggestionsPosition}`]: this.props.MaxVisibleRowCount >= this.props.suggestionsData.length ? -(this.props.suggestionRowHeight * this.props.suggestionsData.length) : - (this.props.suggestionRowHeight * this.props.MaxVisibleRowCount),
           },
           { height: this.state.suggestionRowHeight }]
         }>
@@ -142,7 +141,7 @@ export default class MentionsTextInput extends Component {
           />
         </Animated.View>
         <View>
-          <TextInput
+        <TextInput
             {...this.props}
             onContentSizeChange={(event) => {
               this.setState({
@@ -157,7 +156,6 @@ export default class MentionsTextInput extends Component {
             placeholder={this.props.placeholder ? this.props.placeholder : 'Write a comment...'}
           />
         </View>
-
       </View>
     )
   }
@@ -191,7 +189,8 @@ MentionsTextInput.propTypes = {
         `Prop 'MaxVisibleRowCount' is required if horizontal is set to false.`
       );
     }
-  }
+  },
+  suggestionsPosition: PropTypes.oneOf(['top', 'bottom']).isRequired
 };
 
 MentionsTextInput.defaultProps = {
@@ -201,4 +200,5 @@ MentionsTextInput.defaultProps = {
   textInputMinHeight: 30,
   textInputMaxHeight: 80,
   horizontal: true,
+  suggestionsPosition: 'top'
 }
