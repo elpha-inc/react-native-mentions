@@ -104,15 +104,37 @@ export default class MentionsTextInput extends Component {
     this.setState({ textInputHeight: this.props.textInputMinHeight });
   }
 
+  getLoadingComponent = () => {
+    if (typeof this.props.loadingComponent === 'function') {
+      return this.props.loadingComponent()
+    }
+    return this.props.loadingComponent
+  }
+
   render() {
 
     const { width } = Dimensions.get('window');
     const addition = this.props.suggestionsData.length > 5 ? 100 : 0;
     const numOfRows = this.props.MaxVisibleRowCount >= this.props.suggestionsData.length ? this.props.suggestionsData.length : this.props.MaxVisibleRowCount;
     const bottomPadding = (this.props.suggestionsData.length * this.props.suggestionRowHeight);
-  
+
     return (
       <View>
+        <View>
+          {this.props.loadingData && (
+            <View style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              {this.getLoadingComponent()}
+            </View>
+          )}
+        </View>
         <Animated.View style={
           [{ ...this.props.suggestionsPanelStyle },
           {
@@ -133,7 +155,6 @@ export default class MentionsTextInput extends Component {
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps={"always"}
             horizontal={this.props.horizontal}
-            ListEmptyComponent={this.props.loadingComponent}
             enableEmptySections={true}
             data={this.props.suggestionsData}
             keyExtractor={this.props.keyExtractor}
@@ -141,7 +162,7 @@ export default class MentionsTextInput extends Component {
           />
         </Animated.View>
         <View>
-        <TextInput
+          <TextInput
             {...this.props}
             onContentSizeChange={(event) => {
               this.setState({
@@ -200,5 +221,6 @@ MentionsTextInput.defaultProps = {
   textInputMinHeight: 30,
   textInputMaxHeight: 80,
   horizontal: true,
-  suggestionsPosition: 'top'
+  suggestionsPosition: 'top',
+  loadingData: false
 }
